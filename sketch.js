@@ -18,28 +18,29 @@ function setup() {
 	cnv = createCanvas(windowWidth, windowHeight, WEBGL);
 	centerCanvas();
 	imageMode(CENTER);
-	img = loadImage('cloud.png');
+	img = loadImage('cloud2.png');
+
+	amplitude = new p5.Amplitude();
 
 
 }
 
 function draw() {
 	 
+	// All variables for readin amp and converting it to size and rotation
+	var level = amplitude.getLevel();
+	var size = map(level, 0, 1, 100, 800);
+	var rotation = map(level, 0, 1, 0.01, 0.1);
+
+	// Smoothes resized images and shapes
+	smooth();
 	background(0,150,200);
-	//elip(mouseX, mouseY);
-	//fill(20,20,20);
-	//washSong.pan(mouseY-200);
-	rotateX(frameCount * 0.01);
+	//rotateX(frameCount * rotation);
 	rotateY(frameCount * 0.01);
 	texture(img);
-	torus(100, 40);
 
-	text("Move Mouse", 170, 50);
-	text(mouseY-200, 120, 50);
-	text(playing, 250, 50);
-
-	//image(img, mouseX, mouseY);
-
+	sphere(size, 24, 24);
+	//text('working', CENTER)
 	mouseClicked;
 	
 }
