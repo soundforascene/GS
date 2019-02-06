@@ -1,5 +1,4 @@
-var osc;
-var playing = false;
+// Functions
 
 function elip(x, y){
 	fill (255,150,200);
@@ -8,12 +7,13 @@ function elip(x, y){
 
 function mouseClicked(){
 	if (!playing) {
-		osc.amp(0.5);
-		osc.start(1);
+		washSong.setVolume(0.5);
+		washSong.play();
 		playing = true;
 	}
 	else {
-		osc.amp(0);
+		washSong.setVolume(0);
+		washSong.pause();
 		playing = false;
     }
 }
@@ -22,27 +22,43 @@ function canvas(x, y){
 	createCanvas(x, y); 
 	// Create an equasion that allows me 
 	// to get the centre of the canvas 
+} 
+
+// Declerations 
+
+var washSong;
+var playing = false;
+let img;
+
+function preload(){
+
+	washSong = loadSound('assets/audio/wash.mp3')
+	washSong.loop();
+	washSong.playMode(untilDone);
 }
 
 function setup() {
-  createCanvas(1600,800);
-	var centre = 
-	osc = new p5.Oscillator('triangle');
-	osc.amp(0); 
-	osc.start(0); 
+	
+	createCanvas(1600,800);
+	imageMode(CENTER);
+	img = loadImage('cloud.png');
+
+
 }
 
 function draw() {
 	 
 	background(0,150,200);
-	elip(mouseX, mouseY);
-	fill(20,20,20);
-	osc.freq(mouseX*2)
-	//osc.pan(mouseY-200);
-	// Find a way to automaticly center things.
+	//elip(mouseX, mouseY);
+	//fill(20,20,20);
+	//washSong.pan(mouseY-200);
+
 	text("Move Mouse", 170, 50);
 	text(mouseY-200, 120, 50);
 	text(playing, 250, 50);
+
+	image(img, mouseX, mouseY);
+
 	mouseClicked;
 	
 }
