@@ -8,21 +8,21 @@ var cnv
 
 function preload(){
 
+	// Preloading audio assets 
 	washSong = loadSound('assets/audio/wash.mp3')
 	washSong.loop();
 	washSong.playMode(untilDone);
 }
 
 function setup() {
-	
+	// Canvas 
 	cnv = createCanvas(windowWidth, windowHeight, WEBGL);
 	centerCanvas();
+	// Image 
 	imageMode(CENTER);
 	img = loadImage('cloud2.png');
-
+	// Audio 
 	amplitude = new p5.Amplitude();
-
-
 }
 
 function draw() {
@@ -32,17 +32,25 @@ function draw() {
 	var size = map(level, 0, 1, 100, 800);
 	var rotation = map(level, 0, 1, 0.01, 0.1);
 
+	// Mappning mouse input to a different range for shape rotation
+	var mapX = map(mouseX, 0, windowWidth, -20, 20);
+	var mapY = map(mouseY, 0, windowHeight, 20, -20);
+
 	// Smoothes resized images and shapes
 	smooth();
 	background(0,150,200);
-	//rotateX(frameCount * rotation);
-	rotateY(frameCount * 0.01);
+
+	camera(0, 20, 0, CENTER, CENTER)
+
+	//rotateX(mapY);
+	rotateY(mapX);
+
 	texture(img);
 
+	translate(200, 0);
 	sphere(size, 24, 24);
-	//text('working', CENTER)
-	mouseClicked;
-	
+
+	mouseClicked;	
 }
 
 // Functions
