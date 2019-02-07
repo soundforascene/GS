@@ -33,27 +33,39 @@ function draw() {
 	var rotation = map(level, 0, 1, 0.01, 0.1);
 
 	// Mappning mouse input to a different range for shape rotation
-	var mapX = map(mouseX, 0, windowWidth, -20, 20);
+	var mapX = map(mouseX, 0, windowWidth, -5, 5);
 	var mapY = map(mouseY, 0, windowHeight, 20, -20);
 
 	// Smoothes resized images and shapes
 	smooth();
 	background(0,150,200);
 
-	camera(0, 20, 0, CENTER, CENTER)
+	//camera(0, 20, 0, CENTER, CENTER)
 
-	//rotateX(mapY);
-	rotateY(mapX);
+	rotateZ(mapX);
 
 	texture(img);
-
-	translate(200, 0);
-	sphere(size, 24, 24);
+	translate(200, 0, -40);
+	sphereMove(size, 24, 24);
 
 	mouseClicked;	
 }
 
 // Functions
+
+
+function sphereMove(x, y, z) {
+
+	// I use push and pop to localise the Y roation to the sphere 
+	//as it its where the centre so it doesnt get roatated on the 
+	//trassnform axis later on.
+
+	push();
+	translate(0, 0, 0);
+	rotateY(millis() / 1000);
+	sphere(x, y, z);
+	pop();
+}
 
 function mouseClicked(){
 	if (!playing) {
