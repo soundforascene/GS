@@ -46,31 +46,31 @@ function draw() {
 
 	push();
 	//rotateZ(drag/2);
-	rotateZ(frameCount/200);
+	rotateZ((frameCount*47)/1500);
 	sphereMove(size/2.5, 24, 24, 100, 0, 0, 2);
 	pop();
 
 	push();
 	//rotateZ(drag/2.5);
-	rotateZ(frameCount/300);
+	rotateZ((frameCount*35)/1500);
 	sphereMove(size/1.75, 24, 24, 150, 0, 0, 2.5);
 	pop(); 
 
 	push();
 	//rotateZ(drag/3);
-	rotateZ(frameCount/400);
+	rotateZ((frameCount*29)/1500);
 	sphereMove(size, 24, 24, 215, 0, 0, 2.5);
 	pop();
 
 	push();
 	//rotateZ(drag/3);
-	rotateZ(frameCount/500);
+	rotateZ((frameCount*24)/1500);
 	sphereMove(size/1.25, 24, 24, 285, 0, 0, 2.5);
 	pop(); 
 
 	push();
 	//rotateZ(drag/3);
-	rotateZ(frameCount/600);
+	rotateZ((frameCount*13)/1500);
 	sphereMove(size*1.75, 24, 24, 375, 0, 0, 2.5);
 	pop(); 
 
