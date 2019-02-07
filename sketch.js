@@ -27,9 +27,12 @@ function setup() {
 
 function draw() {
 	 
-	// All variables for readin amp and converting it to size and rotation
+	// All variables for readin amp and converting it to size and rotation 
 	var level = amplitude.getLevel();
 	var size = map(level, 0, 1, 25, 100);
+	var ampRot
+	var num = level;
+	var addNum = num + level;
 
 	// Smoothes resized images and shapes
 	smooth();
@@ -38,25 +41,42 @@ function draw() {
 
 	// Spheres 
 	push();
-	sphereMove(size, 24, 24, 0, 0, 0, 0);
+	sphereMove(size*2, 24, 24, 0, 0, 0, 0);
 	pop();
 
 	push();
-	rotateZ(drag/2);
-	sphereMove(size, 24, 24, 100, 0, 0, 2);
+	//rotateZ(drag/2);
+	rotateZ(frameCount/200);
+	sphereMove(size/2.5, 24, 24, 100, 0, 0, 2);
 	pop();
 
 	push();
-	rotateZ(drag/2.5);
-	sphereMove(size, 24, 24, 200, 0, 0, 2.5);
+	//rotateZ(drag/2.5);
+	rotateZ(frameCount/300);
+	sphereMove(size/1.75, 24, 24, 150, 0, 0, 2.5);
 	pop(); 
 
 	push();
-	rotateZ(drag/3);
-	sphereMove(size, 24, 24, 300, 0, 0, 2.5);
+	//rotateZ(drag/3);
+	rotateZ(frameCount/400);
+	sphereMove(size, 24, 24, 215, 0, 0, 2.5);
+	pop();
+
+	push();
+	//rotateZ(drag/3);
+	rotateZ(frameCount/500);
+	sphereMove(size/1.25, 24, 24, 285, 0, 0, 2.5);
 	pop(); 
 
+	push();
+	//rotateZ(drag/3);
+	rotateZ(frameCount/600);
+	sphereMove(size*1.75, 24, 24, 375, 0, 0, 2.5);
+	pop(); 
 
+	addNum = num + level;
+
+	print(addNum);
 
 	mouseWheel;
 	mouseClicked;	
