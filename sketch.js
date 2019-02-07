@@ -4,7 +4,8 @@ var washSong;
 var playing = false;
 let img;
 // cnv = centreing variable
-var cnv 
+var cnv;
+var drag = 0;
 
 function preload(){
 
@@ -29,7 +30,7 @@ function draw() {
 	 
 	// All variables for readin amp and converting it to size and rotation
 	var level = amplitude.getLevel();
-	var size = map(level, 0, 1, 100, 800);
+	var size = map(level, 0, 1, 50, 200);
 	var rotation = map(level, 0, 1, 0.01, 0.1);
 
 	// Mappning mouse input to a different range for shape rotation
@@ -42,12 +43,10 @@ function draw() {
 
 	//camera(0, 20, 0, CENTER, CENTER)
 
-	rotateZ(mapX);
-
-	texture(img);
-	translate(200, 0, -40);
+	rotateZ(drag);
+	translate(200, 0, 0);
 	sphereMove(size, 24, 24);
-
+	mouseWheel;
 	mouseClicked;	
 }
 
@@ -62,9 +61,10 @@ function sphereMove(x, y, z) {
 
 	push();
 	translate(0, 0, 0);
-	rotateY(millis() / 1000);
+	rotateZ(millis() / 1000);
 	sphere(x, y, z);
 	pop();
+	texture(img);
 }
 
 function mouseClicked(){
@@ -80,6 +80,9 @@ function mouseClicked(){
     }
 }
 
+function mouseWheel(event) {
+	drag += event.delta / 1000;
+}
 // These next two functons centre the patch and allow for resizing 
 
 function centerCanvas () {
