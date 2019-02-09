@@ -1,24 +1,21 @@
 // Declerations 
-
+/*
+var planets = ['sun', 'mercury', 'venus', 'moon', 'earth', 'mars', 'saturn', 'jupiter' , 'pluto'];
+for (var i = 0; i <= 9; i ++) {
+	let = fuits[i]; 
+}
+*/
 // cnv = centreing variable
 var cnv;
 var washSong;
 var playing = false;
-let img;
-let imgSun;
-let imgMercury;
-let imgVenus;
-let imgMoon;
-let imgEarth;
-let imgMars;
-let imgSaturn;
-let imgJupiter;
-let imgPluto;
 var drag = 0;
+var earthSize = 0.1;
+
 
 function preload(){
 	// Preloading audio assets 
-	washSong = loadSound('moon.mp3')
+	washSong = loadSound('wash.mp3')
 	washSong.loop();
 	washSong.playMode(untilDone);
 }
@@ -29,66 +26,57 @@ function setup() {
 	centerCanvas();
 	// Image 
 	imageMode(CENTER);
-	img = loadImage('cloud2.png');
-	imgSun = loadImage('sun.jpeg');
-	imgMercury = loadImage('mercury.jpeg');
-	imgVenus = loadImage('venus.jpeg');
-	imgMoon = loadImage('moon.jpeg');
-	imgEarth = loadImage('Earth.jpeg');
-	imgMars = loadImage('mars.jpeg');
-	imgJupiter = loadImage('jupiter.jpeg');
-	imgSaturn = loadImage('saturn.jpeg');
-	imgUranus = loadImage('uranus.png');
-	imgNeptune = loadImage('neptune.png');
-	imgPluto = loadImage('pluto.jpeg');
+	sun = loadImage('/assets/images/sun.jpeg');
+	imgMercury = loadImage('/assets/images/mercury.jpeg');
+	imgVenus = loadImage('/assets/images/venus.jpeg');
+	imgMoon = loadImage('/assets/images/moon.jpeg');
+	imgEarth = loadImage('/assets/images/Earth.jpeg');
+	imgMars = loadImage('/assets/images/mars.jpeg');
+	imgJupiter = loadImage('/assets/images/jupiter.jpeg');
+	imgSaturn = loadImage('/assets/images/saturn.jpeg');
+	imgUranus = loadImage('/assets/images/uranus.png');
+	imgNeptune = loadImage('/assets/images/neptune.png');
+	imgPluto = loadImage('/assets/images/pluto.jpeg');
 	// Audio 
 	amplitude = new p5.Amplitude();
 }
 
 function draw() {
 
-	// All variables for readin amp and converting it to size and rotation 
+	// All variables for reading amp and converting it to size
 	var level = amplitude.getLevel();
 	var size = map(level, 0, 1, 25, 100);
-
 	// Smoothes resized images and shapes
 	smooth();
-	//background(0,150,200);
+	// nice blue background(0,150,200);
 	background(0, 0, 0);
+	// control for drag and zoom
+	orbitControl();
 
-	//rotateZ(drag/2);
-
-	// Sufix n = name, r = rotation, s = size, x = x transform
-function makePlanet(n, r, s, x){
+	// Sufix n = name, r = rotation (relative speed around the sun), s = size (size compared to earth), x = x transform (distance from the sun)
+function makePlanet(n, r, s, x, y){
 	push();
 	texture(n);
-	rotateZ((frameCount*r)/1500);
-	sphereMove((size*2)/(s*2), x)
+	rotateZ((frameCount*r)/4000);
+	sphereMove(((size*earthSize)*s)/5, x);
 	pop();
-}
-
-	makePlanet(imgSun, 0, 0.5, 0);
-	makePlanet(imgMercury, 47, 3.75, 70);
-	makePlanet(imgVenus, 35, 1.75, 100);
-	makePlanet(imgEarth, 29.8, 1.75, 150);
-	makePlanet(imgMars, 24.1, 3, 185);
-	makePlanet(imgJupiter, 13, 0.5, 285);
-	//makePlanet(imgSaturn, 0, 1, 0);
-	makePlanet(imgUranus, 6.8, 2.75, 415);
-	makePlanet(imgNeptune, 5.5, 2.75, 515);
-	makePlanet(imgPluto, 29, 4, 550);
-
-	push();
-	texture(imgSaturn);
-	rotateZ((frameCount*9.6)/1500);
-	sphereMove(size/1.5, 375);
-	for (var i = 20; i <= 24; i += 2) {
-	saturnRing(i);
+	if (y == 1) {
+		saturnRing();
 	}
-	pop(); 
+}
+	makePlanet(sun, 0, 109, 0);
+	makePlanet(imgMercury, 47, 0.3, 69);
+	makePlanet(imgVenus, 35, 0.9, 109);
+	makePlanet(imgEarth, 29.8, 1, 147);
+	makePlanet(imgMars, 24.1, 0.53, 206);
+	makePlanet(imgJupiter, 13, 11.2, 545);
+	makePlanet(imgSaturn, 9.6, 9.4, 600);
+	makePlanet(imgUranus, 6.8, 4, 800);
+	makePlanet(imgNeptune, 5.5, 3.8, 900);
+	makePlanet(imgPluto, 4.6, 0.18, 1000);
 
 	mouseWheel;
-	mouseClicked;	
+	doubleClicked;	
 }
 
 // Functions
@@ -101,17 +89,17 @@ function makePlanet(n, r, s, x){
 
 
 function saturnRing(y) {
-	push();
-	translate(375, 0, -200)
-	rotateZ ((frameCount*5.5)/1500);
-	//shearX(30);
-	torus(y, 1);
-	pop();
+	translate(375, 0, 0)
+	rotateZ ((frameCount*9.6)/4000);
+	texture(imgSaturn);
+	//for (var i = 20000; i <= 24000; i += 2000) {
+	torus(75, 1);
+	//}
 }
 function sphereMove(x, a) {
 	push();
 	//texture(img);
-	translate(a, 0, -200);
+	translate(a, 0, 0);
 	initSphere(x);
 	pop();
 }
@@ -129,7 +117,7 @@ function initSphere(x) {
 	pop();
 }
 
-function mouseClicked(){
+function doubleClicked(){
 	if (!playing) {
 		washSong.setVolume(0.5);
 		washSong.play();
@@ -143,7 +131,7 @@ function mouseClicked(){
 }
 
 function mouseWheel(event) {
-	drag += event.delta / 500;
+	drag += event.delta / 2000;
 }
 
 // These next two functons centre the patch and allow for resizing 
