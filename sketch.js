@@ -1,15 +1,24 @@
 // Declerations 
 
+// cnv = centreing variable
+var cnv;
 var washSong;
 var playing = false;
 let img;
-// cnv = centreing variable
-var cnv;
+let imgSun;
+let imgMercury;
+let imgVenus;
+let imgMoon;
+let imgEarth;
+let imgMars;
+let imgSaturn;
+let imgJupiter;
+let imgPluto;
 var drag = 0;
 
 function preload(){
 	// Preloading audio assets 
-	washSong = loadSound('assets/audio/wash.mp3')
+	washSong = loadSound('moon.mp3')
 	washSong.loop();
 	washSong.playMode(untilDone);
 }
@@ -21,62 +30,62 @@ function setup() {
 	// Image 
 	imageMode(CENTER);
 	img = loadImage('cloud2.png');
+	imgSun = loadImage('sun.jpeg');
+	imgMercury = loadImage('mercury.jpeg');
+	imgVenus = loadImage('venus.jpeg');
+	imgMoon = loadImage('moon.jpeg');
+	imgEarth = loadImage('Earth.jpeg');
+	imgMars = loadImage('mars.jpeg');
+	imgJupiter = loadImage('jupiter.jpeg');
+	imgSaturn = loadImage('saturn.jpeg');
+	imgUranus = loadImage('uranus.png');
+	imgNeptune = loadImage('neptune.png');
+	imgPluto = loadImage('pluto.jpeg');
 	// Audio 
 	amplitude = new p5.Amplitude();
 }
 
 function draw() {
-	 
+
 	// All variables for readin amp and converting it to size and rotation 
 	var level = amplitude.getLevel();
 	var size = map(level, 0, 1, 25, 100);
-	var ampRot
-	var num = level;
-	var addNum = num + level;
 
 	// Smoothes resized images and shapes
 	smooth();
-	background(0,150,200);
+	//background(0,150,200);
+	background(0, 0, 0);
 
-
-	// Spheres 
-	push();
-	sphereMove(size*2, 24, 24, 0, 0, 0, 0);
-	pop();
-
-	push();
 	//rotateZ(drag/2);
-	rotateZ((frameCount*47)/1500);
-	sphereMove(size/2.5, 24, 24, 100, 0, 0, 2);
+
+	// Sufix n = name, r = rotation, s = size, x = x transform
+function makePlanet(n, r, s, x){
+	push();
+	texture(n);
+	rotateZ((frameCount*r)/1500);
+	sphereMove((size*2)/(s*2), x)
 	pop();
+}
+
+	makePlanet(imgSun, 0, 0.5, 0);
+	makePlanet(imgMercury, 47, 3.75, 70);
+	makePlanet(imgVenus, 35, 1.75, 100);
+	makePlanet(imgEarth, 29.8, 1.75, 150);
+	makePlanet(imgMars, 24.1, 3, 185);
+	makePlanet(imgJupiter, 13, 0.5, 285);
+	//makePlanet(imgSaturn, 0, 1, 0);
+	makePlanet(imgUranus, 6.8, 2.75, 415);
+	makePlanet(imgNeptune, 5.5, 2.75, 515);
+	makePlanet(imgPluto, 29, 4, 550);
 
 	push();
-	//rotateZ(drag/2.5);
-	rotateZ((frameCount*35)/1500);
-	sphereMove(size/1.75, 24, 24, 150, 0, 0, 2.5);
+	texture(imgSaturn);
+	rotateZ((frameCount*9.6)/1500);
+	sphereMove(size/1.5, 375);
+	for (var i = 20; i <= 24; i += 2) {
+	saturnRing(i);
+	}
 	pop(); 
-
-	push();
-	//rotateZ(drag/3);
-	rotateZ((frameCount*29)/1500);
-	sphereMove(size, 24, 24, 215, 0, 0, 2.5);
-	pop();
-
-	push();
-	//rotateZ(drag/3);
-	rotateZ((frameCount*24)/1500);
-	sphereMove(size/1.25, 24, 24, 285, 0, 0, 2.5);
-	pop(); 
-
-	push();
-	//rotateZ(drag/3);
-	rotateZ((frameCount*13)/1500);
-	sphereMove(size*1.75, 24, 24, 375, 0, 0, 2.5);
-	pop(); 
-
-	addNum = num + level;
-
-	print(addNum);
 
 	mouseWheel;
 	mouseClicked;	
@@ -87,26 +96,36 @@ function draw() {
 // x,y,z are the radius and defenition of the sphere
 // a,b,c are the translation peramiters of the sphere 
 
-// Function to add an extra layer of translation to the initRotation function. 
-// Syntax = sphereMove(sphere radius, sphere detail X, sphere detail Y, translate x, y, z, )
-function sphereMove(x, y, z, a, b, c) {
+// Function to add an extra layer of translation to the initSphere function. 
+// Syntax = sphereMove(sphere radius, sphere detail X, sphere detail Y, translate x, y, z)
+
+
+function saturnRing(y) {
 	push();
-	texture(img);
-	translate(a, b, c);
-	initRotation(x,y,z);
+	translate(375, 0, -200)
+	rotateZ ((frameCount*5.5)/1500);
+	//shearX(30);
+	torus(y, 1);
+	pop();
+}
+function sphereMove(x, a) {
+	push();
+	//texture(img);
+	translate(a, 0, -200);
+	initSphere(x);
 	pop();
 }
 
 // Function to create the sphere object 
-// Syntax = initRotation(radius, detailX, detailY)
-function initRotation(x, y, z) {
+// Syntax = initSphere(radius, detailX, detailY)
+function initSphere(x) {
 	// I use push and pop to localise the Y roation to the sphere 
 	//as it its where the centre so it doesnt get roatated on the 
 	//trassnform axis later on.
 	push();
 	translate(0, 0, 0);
 	rotateZ(millis() / 1000);
-	sphere(x, y, z);
+	sphere(x, 24, 24);
 	pop();
 }
 
