@@ -1,21 +1,29 @@
 // Declerations 
-/*
-var planets = ['sun', 'mercury', 'venus', 'moon', 'earth', 'mars', 'saturn', 'jupiter' , 'pluto'];
-for (var i = 0; i <= 9; i ++) {
-	let = fuits[i]; 
-}
-*/
+
+
 // cnv = centreing variable
 var cnv;
 var washSong;
 var playing = false;
 var drag = 0;
 var earthSize = 0.1;
+var grow = false;
 
 
 function preload(){
+	sun = loadImage('assets/images/sun.jpeg');
+	imgMercury = loadImage('assets/images/mercury.jpeg');
+	imgVenus = loadImage('assets/images/venus.jpeg');
+	imgMoon = loadImage('assets/images/moon.jpeg');
+	imgEarth = loadImage('assets/images/Earth.jpeg');
+	imgMars = loadImage('assets/images/mars.jpeg');
+	imgJupiter = loadImage('assets/images/jupiter.jpeg');
+	imgSaturn = loadImage('assets/images/saturn.jpeg');
+	imgUranus = loadImage('assets/images/uranus.png');
+	imgNeptune = loadImage('assets/images/neptune.png');
+	imgPluto = loadImage('assets/images/pluto.jpeg');
 	// Preloading audio assets 
-	washSong = loadSound('wash.mp3')
+	washSong = loadSound('assets/audio/wash.mp3')
 	washSong.loop();
 	washSong.playMode(untilDone);
 }
@@ -26,17 +34,6 @@ function setup() {
 	centerCanvas();
 	// Image 
 	imageMode(CENTER);
-	sun = loadImage('/assets/images/sun.jpeg');
-	imgMercury = loadImage('/assets/images/mercury.jpeg');
-	imgVenus = loadImage('/assets/images/venus.jpeg');
-	imgMoon = loadImage('/assets/images/moon.jpeg');
-	imgEarth = loadImage('/assets/images/Earth.jpeg');
-	imgMars = loadImage('/assets/images/mars.jpeg');
-	imgJupiter = loadImage('/assets/images/jupiter.jpeg');
-	imgSaturn = loadImage('/assets/images/saturn.jpeg');
-	imgUranus = loadImage('/assets/images/uranus.png');
-	imgNeptune = loadImage('/assets/images/neptune.png');
-	imgPluto = loadImage('/assets/images/pluto.jpeg');
 	// Audio 
 	amplitude = new p5.Amplitude();
 }
@@ -52,10 +49,24 @@ function draw() {
 	background(0, 0, 0);
 	// control for drag and zoom
 	orbitControl();
+	// Lighting
+	//pointLight(200,200,255, 0, 0, 0);
 
-	// Sufix n = name, r = rotation (relative speed around the sun), s = size (size compared to earth), x = x transform (distance from the sun)
+// Syntax: n = name, r = rotation (relative speed around the sun), s = size (size compared to earth), x = x transform (distance from the sun)
+function makeSun(n, r, s, x, y){
+	push();
+	ambientMaterial(200,200,255);
+	texture(n);
+	rotateZ((frameCount*r)/4000);
+	sphereMove(((size*earthSize)*s)/5, x);
+	pop();
+}
 function makePlanet(n, r, s, x, y){
 	push();
+	if (grow == true) {
+		s *= 30;
+	}
+	ambientMaterial(500,500,500);
 	texture(n);
 	rotateZ((frameCount*r)/4000);
 	sphereMove(((size*earthSize)*s)/5, x);
@@ -64,7 +75,6 @@ function makePlanet(n, r, s, x, y){
 		saturnRing();
 	}
 }
-	makePlanet(sun, 0, 109, 0);
 	makePlanet(imgMercury, 47, 0.3, 69);
 	makePlanet(imgVenus, 35, 0.9, 109);
 	makePlanet(imgEarth, 29.8, 1, 147);
@@ -75,30 +85,27 @@ function makePlanet(n, r, s, x, y){
 	makePlanet(imgNeptune, 5.5, 3.8, 900);
 	makePlanet(imgPluto, 4.6, 0.18, 1000);
 
-	mouseWheel;
+	push();
+	pointLight(500, 500, 500, 0, 0, 0);
+	makeSun(sun, 0, 109, 0);
+	pop();
+
 	doubleClicked;	
 }
 
 // Functions
 
-// x,y,z are the radius and defenition of the sphere
-// a,b,c are the translation peramiters of the sphere 
-
-// Function to add an extra layer of translation to the initSphere function. 
-// Syntax = sphereMove(sphere radius, sphere detail X, sphere detail Y, translate x, y, z)
-
-
-function saturnRing(y) {
+function saturnRing() {
 	translate(375, 0, 0)
 	rotateZ ((frameCount*9.6)/4000);
 	texture(imgSaturn);
 	//for (var i = 20000; i <= 24000; i += 2000) {
 	torus(75, 1);
-	//}
 }
+// Function to add an extra layer of translation to the initSphere function. 
+// Syntax: x = sphere radius, a = translate X 
 function sphereMove(x, a) {
 	push();
-	//texture(img);
 	translate(a, 0, 0);
 	initSphere(x);
 	pop();
@@ -117,21 +124,20 @@ function initSphere(x) {
 	pop();
 }
 
+// Function turns on and off music when double clicking
 function doubleClicked(){
 	if (!playing) {
 		washSong.setVolume(0.5);
 		washSong.play();
 		playing = true;
+		grow = true;
 	}
 	else {
 		washSong.setVolume(0);
 		washSong.pause();
 		playing = false;
+		grow = false;
     }
-}
-
-function mouseWheel(event) {
-	drag += event.delta / 2000;
 }
 
 // These next two functons centre the patch and allow for resizing 
