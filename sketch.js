@@ -8,6 +8,8 @@ var playing = false;
 var drag = 0;
 var earthSize = 0.1;
 var grow = false;
+var mAmp;
+var mRate;
 
 
 function preload(){
@@ -40,6 +42,13 @@ function setup() {
 
 function draw() {
 
+
+	function makeCamera() {
+	camera(0, 0, 800, 147, 0, 0, 0, 1, 0);
+	}
+	makeCamera();
+	rotateZ((frameCount*29.8)/12000)
+
 	// All variables for reading amp and converting it to size
 	var level = amplitude.getLevel();
 	var size = map(level, 0, 1, 25, 100);
@@ -49,21 +58,31 @@ function draw() {
 	background(0, 0, 0);
 	// control for drag and zoom
 	orbitControl();
-	//Lighting 
+	//Camera
+	
+
+	//camera(0, 0, 20 + sin(frameCount * 0.01) * 10, 0, 0, 0, 0, 1, 0);
+
+	 mAmp = map(mouseX, 0, 1439, 0, 1);
+	 mRate = map(mouseY, 0, 748, -0, 1);
+
+	 washSong.setVolume(mAmp);
+	 washSong.rate(mRate);
+	 //print(mouseY);
 
 // Syntax: n = name, r = rotation (relative speed around the sun), s = size (size compared to earth), x = x transform (distance from the sun)
 function makeSun(n, r, s, x, y){
 	push();
 	ambientMaterial(200,200,255);
 	texture(n);
-	rotateZ((frameCount*r)/4000);
+	rotateZ((frameCount*r)/12000);
 	sphereMove(((size*earthSize)*s)/5, x);
 	pop();
 }
 function makePlanet(n, r, s, x, y){
 	push();
 	if (grow == true) {
-		s *= 30;
+		s *= 15;
 	}
 	// Calculate Radius 
 	rad = PI * (x*2)
@@ -78,17 +97,17 @@ function makePlanet(n, r, s, x, y){
 }
 
 	makeSun(sun, 0, 109, 0);
-	makePlanet(imgMercury, 47, 0.3, 69);
-	makePlanet(imgVenus, 35, 0.9, 109);
-	makePlanet(imgEarth, 29.8, 1, 147);
-	makePlanet(imgMars, 24.1, 0.53, 206);
-	makePlanet(imgJupiter, 13, 11.2, 545);
-	makePlanet(imgSaturn, 9.6, 9.4, 600);
-	makePlanet(imgUranus, 6.8, 4, 800);
-	makePlanet(imgNeptune, 5.5, 3.8, 900);
-	makePlanet(imgPluto, 4.6, 0.18, 1000);
+	makePlanet(imgMercury, 47, (0.3*20), 69);
+	makePlanet(imgVenus, 35, (0.9*20), 109);
+	makePlanet(imgEarth, 29.8, (1*20), 147);
+	makePlanet(imgMars, 24.1, (0.53*20), 206);
+	makePlanet(imgJupiter, 13, (11.2*3), (545-200));
+	makePlanet(imgSaturn, 9.6, (9.4*3), 600-200);
+	makePlanet(imgUranus, 6.8, (4*5), 800-200);
+	makePlanet(imgNeptune, 5.5, (3.8*5), 900-400);
+	makePlanet(imgPluto, 4.6, (0.18*10), 1000-400);
 
-	print((frameCount*29.8)/4000);
+	//print((frameCount*29.8)/4000);
 
 	doubleClicked;	
 }
@@ -127,7 +146,7 @@ function initSphere(x) {
 // Function turns on and off music when double clicking
 function doubleClicked(){
 	if (!playing) {
-		washSong.setVolume(0.5);
+	
 		washSong.play();
 		playing = true;
 		grow = true;
