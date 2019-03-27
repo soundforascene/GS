@@ -49,8 +49,7 @@ function draw() {
 	background(0, 0, 0);
 	// control for drag and zoom
 	orbitControl();
-	// Lighting
-	//pointLight(200,200,255, 0, 0, 0);
+	//Lighting 
 
 // Syntax: n = name, r = rotation (relative speed around the sun), s = size (size compared to earth), x = x transform (distance from the sun)
 function makeSun(n, r, s, x, y){
@@ -66,7 +65,9 @@ function makePlanet(n, r, s, x, y){
 	if (grow == true) {
 		s *= 30;
 	}
-	ambientMaterial(500,500,500);
+	// Calculate Radius 
+	rad = PI * (x*2)
+
 	texture(n);
 	rotateZ((frameCount*r)/4000);
 	sphereMove(((size*earthSize)*s)/5, x);
@@ -75,6 +76,8 @@ function makePlanet(n, r, s, x, y){
 		saturnRing();
 	}
 }
+
+	makeSun(sun, 0, 109, 0);
 	makePlanet(imgMercury, 47, 0.3, 69);
 	makePlanet(imgVenus, 35, 0.9, 109);
 	makePlanet(imgEarth, 29.8, 1, 147);
@@ -85,10 +88,7 @@ function makePlanet(n, r, s, x, y){
 	makePlanet(imgNeptune, 5.5, 3.8, 900);
 	makePlanet(imgPluto, 4.6, 0.18, 1000);
 
-	push();
-	pointLight(500, 500, 500, 0, 0, 0);
-	makeSun(sun, 0, 109, 0);
-	pop();
+	print((frameCount*29.8)/4000);
 
 	doubleClicked;	
 }
