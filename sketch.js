@@ -22,6 +22,7 @@ function preload(){
 	imgUranus = loadImage('assets/images/uranus.png');
 	imgNeptune = loadImage('assets/images/neptune.png');
 	imgPluto = loadImage('assets/images/pluto.jpeg');
+	imgStar = loadImage('assets/images/star.jpg');
 }
 
 function setup() {
@@ -32,7 +33,7 @@ function setup() {
 	imageMode(CENTER);
 	cam = createCamera();
 	// Stars
-	for (let i = 0; i < 200; i++) {
+	for (let i = 0; i < 100; i++) {
 		let p = new Particle();
 		particles.push(p);
 	}
@@ -90,9 +91,6 @@ function draw() {
 	// Making Stars
 	for (let i = 0; i < particles.length; i++) {
 		particles[i].show();
-		particles[i].update();
-		//particles[i].move();
-		moveStar(i);
 	}
 }
 
@@ -102,25 +100,35 @@ function draw() {
 
 class Particle {
 	constructor() {
-		this.x = 0;
-		this.y = 0
-		//this.z = random(-10, -30);
-		this.r = random(1, 10);
+		this.xb = random(-2000, 2000);
+		this.yb = random(-2000, 2000);
+		this.zb = random(-2000, 2000);
+		this.x = map(this.xb, -2000, 2000, -200, 200);
+		this.y = map(this.yb, -2000, 2000, -200, 200);
+		this.z = map(this.zb, -2000, 2000, -200, 200);
+		this.rx = random(10, -10);
+		this.ry = random(10, -10);
+		this.rz = random(10, -10);
+		this.rad = random(1, 4);
 	}
 	show() {
-		sphere(this.r, 16, 16);
-	}
-	update() {
-		translate(0, 0, 0);
+		noStroke();
+		fill(255);
+		translate(this.x, this.y, this.z);
+		// this.x = 0;
+		// this.y = 0; 
+		// this.z = 0;
+		//ellipse(this.x, this.y, 24, 24);
+		sphere(this.rad, 16, 16)
 	}
 }
 
 function moveStar(i) {
 	push();
-	particles[i];
 	translate(100 , 100, 100)
 	pop();
 }
+
 // Function to add an extra layer of translation to the initSphere function.
 // Syntax: x = sphere radius, a = translate X
 function sphereMove(rad, x, y, z) {
