@@ -33,7 +33,7 @@ function setup() {
 	imageMode(CENTER);
 	cam = createCamera();
 	// Stars
-	for (let i = 0; i < 100; i++) {
+	for (let i = 0; i < 500; i++) {
 		let p = new Particle();
 		particles.push(p);
 	}
@@ -43,7 +43,7 @@ function draw() {
 
 	var size = map(0.02, 0, 1, 25, 100);
 	// Background Colour
-	background(0, 0, 0);
+	//background(0, 0, 0);
 	// Smoothes resized images and shapes
 	smooth();
 	//Camera
@@ -51,7 +51,7 @@ function draw() {
 
 	//set initial tilt
 	// push();
-	// 	cam.tilt(0);
+	// 	cam.tilt(0.5);
 	// 	//rotateZ(frameCount * 0.01);
 	// 	cam.setPosition(0, 850, 500);
 	// 	cam.lookAt(0,0,0);
@@ -100,24 +100,27 @@ function draw() {
 
 class Particle {
 	constructor() {
-		this.xb = random(-2000, 2000);
-		this.yb = random(-2000, 2000);
-		this.zb = random(-2000, 2000);
-		this.x = map(this.xb, -2000, 2000, -200, 200);
-		this.y = map(this.yb, -2000, 2000, -200, 200);
-		this.z = map(this.zb, -2000, 2000, -200, 200);
-		this.rx = random(10, -10);
-		this.ry = random(10, -10);
-		this.rz = random(10, -10);
+		this.dist = 2000;
+		this.maxRot = 40;
+		this.minRot = -40;
+		this.xb = random(-200, 200);
+		this.yb = random(-200, 200);
+		this.zb = random(-200, 200);
+		this.x = map(this.xb, -200, 200, -200, 200);
+		this.y = map(this.yb, -200, 200, -200, 200);
+		this.z = map(this.zb, -200, 200, -200, 200);
+		this.rx = random(this.maxRot, this.minRot);
+		this.ry = random(this.maxRot, this.minRot);
+		this.rz = random(this.maxRot, this.minRot);
 		this.rad = random(1, 4);
 	}
 	show() {
 		noStroke();
 		fill(255);
 		translate(this.x, this.y, this.z);
-		// this.x = 0;
-		// this.y = 0; 
-		// this.z = 0;
+		rotateX(this.rx);
+		rotateY(this.ry);
+		rotateZ(this.rz);
 		//ellipse(this.x, this.y, 24, 24);
 		sphere(this.rad, 16, 16)
 	}
