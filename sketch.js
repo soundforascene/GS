@@ -1,10 +1,13 @@
-// Declerations 
-
-
-// cnv = centreing variable
+// Declerations
 var cnv;
 var drag = 0;
 var earthSize = 0.1;
+var camRotation;
+var yMov = 0;
+var zMov = 0;
+let cam;
+let delta = 0.01;
+let particles = [];
 
 
 function preload(){
@@ -22,90 +25,131 @@ function preload(){
 }
 
 function setup() {
-	// Canvas 
+	// Canvas
 	cnv = createCanvas(windowWidth, windowHeight, WEBGL);
 	centerCanvas();
-	// Image 
+	// Image
 	imageMode(CENTER);
+	cam = createCamera();
+	// Stars
+	for (let i = 0; i < 200; i++) {
+		let p = new Particle();
+		particles.push(p);
+	}
 }
 
 function draw() {
 
+	var size = map(0.02, 0, 1, 25, 100);
+	// Background Colour
+	background(0, 0, 0);
 	// Smoothes resized images and shapes
 	smooth();
-	// Background Colour 
-	background(0, 0, 0);
 	//Camera
 	orbitControl();
 
-	var size = map(0.02, 0, 1, 25, 100);
+	//set initial tilt
+	// push();
+	// 	cam.tilt(0);
+	// 	//rotateZ(frameCount * 0.01);
+	// 	cam.setPosition(0, 850, 500);
+	// 	cam.lookAt(0,0,0);
+	// pop();
 
-	function makeSun(n, r, s, x, y){
+	function makeSun(n, r, s, x){
 		push();
 		ambientMaterial(200,200,255);
 		texture(n);
 		rotateZ((frameCount*r)/12000);
-		sphereMove(((size*earthSize)*s)/5, x);
+		sphereMove(((size*earthSize)*s)/5, x, 0, 0);
 		pop();
 	}
 
-	function makePlanet(n, r, s, x){
+	function makePlanet(n, r, s, x, y, z){
 		push();
-		// Calculate Radius 
+		// Calculate Radius
 		rad = PI * (x*2)
 		texture(n);
 		rotateZ((frameCount*r)/4000);
-		sphereMove(((size*earthSize)*s)/5, x);
+		sphereMove(((size*earthSize)*s)/5, x, y, z);
 		pop();
 	}
-	
+
 	// Syntax: n = name, r = rotation (relative speed around the sun), s = size (size compared to earth), x = x transform (distance from the sun)
 	makeSun(sun, 0, 109, 0);
-	makePlanet(imgMercury, 47, (0.3*20), 69);
-	makePlanet(imgVenus, 35, (0.9*20), 109);
-	makePlanet(imgEarth, 29.8, (1*20), 147);
-	makePlanet(imgMars, 24.1, (0.53*20), 206);
-	makePlanet(imgJupiter, 13, (11.2*3), (545-200));
-	makePlanet(imgSaturn, 9.6, (9.4*3), 600-200);
-	makePlanet(imgUranus, 6.8, (4*5), 800-200);
-	makePlanet(imgNeptune, 5.5, (3.8*5), 900-400);
-	makePlanet(imgPluto, 4.6, (0.18*10), 1000-400);
+	makePlanet(imgMercury, 47, (0.3*20), 69, yMov, zMov);
+	makePlanet(imgVenus, 35, (0.9*20), 109, yMov, zMov);
+	makePlanet(imgEarth, 29.8, (1*20), 147, yMov, zMov);
+	makePlanet(imgMars, 24.1, (0.53*20), 206, yMov, zMov);
+	makePlanet(imgJupiter, 13, (11.2*3), (545-200), yMov, zMov);
+	makePlanet(imgSaturn, 9.6, (9.4*3), 600-200, yMov, zMov);
+	makePlanet(imgUranus, 6.8, (4*5), 800-200, yMov, zMov);
+	makePlanet(imgNeptune, 5.5, (3.8*5), 900-400, yMov, zMov);
+	makePlanet(imgPluto, 4.6, (0.18*10), 1000-400, yMov, zMov);
 
+	// Making Stars
+	for (let i = 0; i < particles.length; i++) {
+		particles[i].show();
+		particles[i].update();
+		//particles[i].move();
+		moveStar(i);
+	}
 }
 
-// Functions
+// Functions & Classes
 
-// Function to add an extra layer of translation to the initSphere function. 
-// Syntax: x = sphere radius, a = translate X 
-function sphereMove(x, a) {
+// Star Particle
+
+class Particle {
+	constructor() {
+		this.x = 0;
+		this.y = 0
+		//this.z = random(-10, -30);
+		this.r = random(1, 10);
+	}
+	show() {
+		sphere(this.r, 16, 16);
+	}
+	update() {
+		translate(0, 0, 0);
+	}
+}
+
+function moveStar(i) {
 	push();
-	translate(a, 0, 0);
-	initSphere(x);
+	particles[i];
+	translate(100 , 100, 100)
+	pop();
+}
+// Function to add an extra layer of translation to the initSphere function.
+// Syntax: x = sphere radius, a = translate X
+function sphereMove(rad, x, y, z) {
+	push();
+	translate(x, y, z);
+	initSphere(rad);
 	pop();
 }
 
-// Function to create the sphere object 
+// Function to create the sphere object
 // Syntax = initSphere(radius, detailX, detailY)
-
-function initSphere(x) {
-	// I use push and pop to localise the Y roation to the sphere 
-	//as it its where the centre so it doesnt get roatated on the 
-	//trassnform axis later on.
+// I use push and pop to localise the Y roation to the sphere
+//as it its where the centre so it doesnt get roatated on the
+//trassnform axis later on.
+function initSphere(rad) {
 	push();
 	translate(0, 0, 0);
 	rotateZ(millis() / 1000);
-	sphere(x, 24, 24);
+	sphere(rad, 24, 24);
 	pop();
 }
 
-// These next two functons centre the patch and allow for resizing 
+// These next two functons centre the patch and allow for resizing
 
 function centerCanvas () {
 	var x = (windowWidth - width) / 2;
 	var y = (windowHeight - height) /2;
-	cnv.position(x , y);  
+	cnv.position(x , y);
 }
-
 function windowResized() {
 	centerCanvas();
 }
