@@ -43,7 +43,7 @@ function draw() {
 
 	var size = map(0.02, 0, 1, 25, 100);
 	// Background Colour
-	//background(0, 0, 0);
+	background(0, 0, 0);
 	// Smoothes resized images and shapes
 	smooth();
 	//Camera
@@ -59,17 +59,17 @@ function draw() {
 
 	function makeSun(n, r, s, x){
 		push();
-		ambientMaterial(200,200,255);
+		ambientMaterial(200, 200, 255);
 		texture(n);
-		rotateZ((frameCount*r)/12000);
-		sphereMove(((size*earthSize)*s)/5, x, 0, 0);
+		rotateZ((frameCount*r) / 12000);
+		sphereMove(((size*earthSize) * s) / 5, x ,0 ,0);
 		pop();
 	}
 
 	function makePlanet(n, r, s, x, y, z){
 		push();
 		// Calculate Radius
-		rad = PI * (x*2)
+		rad = PI * (x * 2)
 		texture(n);
 		rotateZ((frameCount*r)/4000);
 		sphereMove(((size*earthSize)*s)/5, x, y, z);
@@ -100,19 +100,13 @@ function draw() {
 
 class Particle {
 	constructor() {
-		this.dist = 2000;
-		this.maxRot = 40;
-		this.minRot = -40;
 		this.xb = random(-200, 200);
 		this.yb = random(-200, 200);
 		this.zb = random(-200, 200);
 		this.x = map(this.xb, -200, 200, -200, 200);
 		this.y = map(this.yb, -200, 200, -200, 200);
 		this.z = map(this.zb, -200, 200, -200, 200);
-		this.rx = random(this.maxRot, this.minRot);
-		this.ry = random(this.maxRot, this.minRot);
-		this.rz = random(this.maxRot, this.minRot);
-		this.rad = random(1, 4);
+		this.rad = random(0.5, 2);
 	}
 	show() {
 		noStroke();
@@ -125,6 +119,10 @@ class Particle {
 		sphere(this.rad, 16, 16)
 	}
 }
+
+// class Planets {
+// 	constructor(n, s, r, x, y, z, v)
+// }
 
 function moveStar(i) {
 	push();
