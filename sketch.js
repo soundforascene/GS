@@ -33,11 +33,7 @@ function setup() {
 	imageMode(CENTER);
 	cam = createCamera();
 	// Stars
-<<<<<<< HEAD
-	for (let i = 0; i < 500; i++) {
-=======
 	for (let i = 0; i < 1000; i++) {
->>>>>>> fixed
 		let p = new Particle();
 		particles.push(p);
 	}
