@@ -33,7 +33,11 @@ function setup() {
 	imageMode(CENTER);
 	cam = createCamera();
 	// Stars
+<<<<<<< HEAD
 	for (let i = 0; i < 500; i++) {
+=======
+	for (let i = 0; i < 1000; i++) {
+>>>>>>> fixed
 		let p = new Particle();
 		particles.push(p);
 	}
@@ -100,23 +104,20 @@ function draw() {
 
 class Particle {
 	constructor() {
-		this.xb = random(-200, 200);
-		this.yb = random(-200, 200);
-		this.zb = random(-200, 200);
-		this.x = map(this.xb, -200, 200, -200, 200);
-		this.y = map(this.yb, -200, 200, -200, 200);
-		this.z = map(this.zb, -200, 200, -200, 200);
-		this.rad = random(0.5, 2);
+		this.x = random(0-width, width);
+		this.y = random(0-height, height);
+		this.z = random(5000, -5000);
+		this.rad = random(1, 4);
 	}
 	show() {
+		push();
 		noStroke();
 		fill(255);
-		translate(this.x, this.y, this.z);
-		rotateX(this.rx);
-		rotateY(this.ry);
-		rotateZ(this.rz);
-		//ellipse(this.x, this.y, 24, 24);
-		sphere(this.rad, 16, 16)
+		if(this.x < -100 || this.x > 100 || this.y < -100 || this.y > 100 || this.z < -100 || this.z > 100) {
+			translate(this.x, this.y, this.z);
+			sphere(this.rad, 16, 16);
+		}
+		pop();
 	}
 }
 
