@@ -51,17 +51,11 @@ function draw() {
 	//Camera
 	orbitControl();
 
-	//set initial tilt
-	// push();
-	// 	cam.tilt(0.5);
-	// 	//rotateZ(frameCount * 0.01);
-	// 	cam.setPosition(0, 850, 500);
-	// 	cam.lookAt(0,0,0);
-	// pop();
-
 	function makeSun(n, r, s, x){
 		push();
 		ambientMaterial(200, 200, 255);
+		//pointLight(255, 255, 255, 0, 0, 0);
+		ambientLight(255);
 		texture(n);
 		rotateZ((frameCount*r) / 12000);
 		sphereMove(((size*earthSize) * s) / 5, x ,0 ,0);
@@ -72,6 +66,7 @@ function draw() {
 		push();
 		// Calculate Radius
 		rad = PI * (x * 2)
+		//specularMaterial(255);
 		texture(n);
 		rotateY((frameCount*r)/4000);
 		sphereMove(((size*earthSize)*s)/5, x, y, z);
@@ -105,7 +100,7 @@ class Particle {
 		this.x = random(0-width, width);
 		this.y = random(0-height, height);
 		this.z = random(5000, -5000);
-		this.rad = random(1, 4);
+		this.rad = random(0.5, 2);
 		this.a = random(0, 255);
 	}
 	show() {
