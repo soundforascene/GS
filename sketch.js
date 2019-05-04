@@ -1,3 +1,5 @@
+//    browser-sync start --server -f -w
+
 // Declerations
 var cnv;
 var drag = 0;
@@ -71,7 +73,7 @@ function draw() {
 		// Calculate Radius
 		rad = PI * (x * 2)
 		texture(n);
-		rotateZ((frameCount*r)/4000);
+		rotateY((frameCount*r)/4000);
 		sphereMove(((size*earthSize)*s)/5, x, y, z);
 		pop();
 	}
@@ -104,12 +106,14 @@ class Particle {
 		this.y = random(0-height, height);
 		this.z = random(5000, -5000);
 		this.rad = random(1, 4);
+		this.a = random(0, 255);
 	}
 	show() {
 		push();
+		//ambientMaterial(255, 255, 255, this.a)
 		noStroke();
-		fill(255);
-		if(this.x < -100 || this.x > 100 || this.y < -100 || this.y > 100 || this.z < -100 || this.z > 100) {
+		fill(this.a);
+		if(this.x < -200 || this.x > 200 || this.y < -200 || this.y > 200 || this.z < -200 || this.z > 200) {
 			translate(this.x, this.y, this.z);
 			sphere(this.rad, 16, 16);
 		}
@@ -144,7 +148,7 @@ function sphereMove(rad, x, y, z) {
 function initSphere(rad) {
 	push();
 	translate(0, 0, 0);
-	rotateZ(millis() / 1000);
+	rotateY(millis() / 1000);
 	sphere(rad, 24, 24);
 	pop();
 }
