@@ -3,7 +3,6 @@
 function Intro() {
 
 	// Declerations
-	var cnv;
 	var yMov = 0;
 	var zMov = 0;
 	let particles = [];
@@ -12,8 +11,7 @@ function Intro() {
 	this.setup = function() {
 
 		// === Canvas ====
-		cnv = createCanvas(windowWidth, windowHeight, WEBGL);
-		centerCanvas();
+		createCanvas(windowWidth, windowHeight, WEBGL);
 		// ===== Image =====
 		imageMode(CENTER);
 		// ===== Stars =====
@@ -67,15 +65,4 @@ function Intro() {
 			this.sceneManager.showScene( sunLevel );
 		} 
     }
-
-	// // These next two functons centre the patch and allow for resizing
-	function centerCanvas() {
-		var x = (windowWidth - width) / 2;
-		var y = (windowHeight - height) /2;
-		cnv.position(x , y);
-	}
-
-	function windowResized() {
-		centerCanvas();
-	}
 }
