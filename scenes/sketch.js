@@ -12,8 +12,6 @@ function Intro() {
 
 		// === Canvas ====
 		createCanvas(windowWidth, windowHeight, WEBGL);
-		// ===== Image =====
-		imageMode(CENTER);
 		// ===== Stars =====
 		for (let i = 0; i < 1000; i++) {
 			let p = new Particle();
@@ -57,12 +55,14 @@ function Intro() {
 		}
 
 	}
-
 	// ===== Functions & Classes =====
 
 	this.keyPressed = function() {
-		if (key == 1) {
+		if (key == '1') {
 			this.sceneManager.showScene( sunLevel );
 		} 
+		if (key == '2') {
+			this.sceneManager.showScene( earthLevel );
+		}
     }
 }

@@ -34,6 +34,7 @@ function setup()
 
     mgr.addScene( Intro );
     mgr.addScene( sunLevel );
+    mgr.addScene( earthLevel );
     mgr.wire();
     mgr.showScene( Intro );
 }
