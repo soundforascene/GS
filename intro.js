@@ -37,4 +37,3 @@ function setup()
     mgr.wire();
     mgr.showScene( Intro );
 }
-
