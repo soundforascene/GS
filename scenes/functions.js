@@ -1,4 +1,4 @@
-export class Particle {
+class Particle {
 	constructor() {
 		this.x = random(-2500, 2500);
 		this.y = random(-2500, 2500);

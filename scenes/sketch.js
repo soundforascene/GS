@@ -2,7 +2,6 @@
 function Intro() {
 
 	// Declerations
-	import { Particle } from "functions.js"; 
 	var cnv;
 	var drag = 0;
 	var earthSize = 0.1;
