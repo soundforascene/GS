@@ -63,7 +63,7 @@ function sunLevel() {
 			pop();
 		}
 
-		this.makeSun(imgSun, 0, 300, 0);
+		this.makeSun(imgSun, 0, 550, 0);
 
 		// Making Stars
 		for (let i = 0; i < particles.length; i++) {
