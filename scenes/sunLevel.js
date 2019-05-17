@@ -1,5 +1,3 @@
-//    browser-sync start --server -f -w 
-
 function sunLevel() {
 
 	// Declerations
@@ -12,19 +10,12 @@ function sunLevel() {
 
 		// === Canvas ====
 		createCanvas(windowWidth, windowHeight, WEBGL);
-		// ==== Scenes =====
-		mgr = new SceneManager();
-		//mgr.wire();
-		mgr.addScene(Intro);
-		//mgr.addScene(Intro);
-	    mgr.showScene(sunLevel);
-	    //mgr.showNextScene();
+
 		// ===== Stars =====
 		for (let i = 0; i < 1000; i++) {
 			let p = new Particle();
 			particles.push(p);
 		}
-		// ===== DOM Elements, sliders ect. =====
 
 	  	// ===== Audio =====
 	  	nintendo.play();
@@ -38,7 +29,7 @@ function sunLevel() {
 		//Camera
 		orbitControl();
 
-		makeSun(imgSun, 0, 550, 0);
+		makeSun(imgSun, 550, 0);
 
 		// Making Stars
 		for (let i = 0; i < particles.length; i++) {
@@ -46,9 +37,8 @@ function sunLevel() {
 		}
 
 	}
-
+	
 	// ===== Functions & Classes =====
-
 
 	this.keyPressed = function() {
 		if (key == '1') {

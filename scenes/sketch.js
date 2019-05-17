@@ -3,8 +3,8 @@
 function Intro() {
 
 	// Declerations
+	var time;
 	var yMov = 0;
-	var zMov = 0;
 	let particles = [];
 	var mgr;
 
@@ -36,9 +36,14 @@ function Intro() {
 		orbitControl();
 
 		var val = slider.value();
-		nintendo.setVolume(val); 
+		nintendo.setVolume(val);
 
-		makeSun(imgSun, 0, 109, 0);
+		var time = (frameCount*0.03);
+		var zMov = time;
+
+		//print(time);
+
+		makeSun(imgSun, 109, 0);
 		makePlanet(imgMercury, 47, (0.3*20), 69, yMov, zMov);
 		makePlanet(imgVenus, 35, (0.9*20), 109, yMov, zMov);
 		makePlanet(imgEarth, 29.8, (1*20), 147, yMov, zMov);

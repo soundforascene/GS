@@ -23,13 +23,13 @@ class Particle {
 
 // ======== FUNCTIONS ========
 
-function makeSun(n, r, s, x){
+// Syntax: n = name, s = size, x = x position
+function makeSun(n, s, x){
 	push();
 		ambientMaterial(200, 200, 255);
 		//pointLight(255, 255, 255, 0, 0, 0);
 		ambientLight(255);
 		texture(n);
-		rotateZ((frameCount*r) / 12000);
 		this.sphereMove(((26.5*0.1) * s) / 5, x ,0 ,0);
 	pop();
 }
@@ -38,8 +38,8 @@ function makeSun(n, r, s, x){
 function makePlanet(n, r, s, x, y, z){
 	push();
 		texture(n);
-		rotateY((frameCount*r)/4000);
-		this.sphereMove(((26.5*0.1)*s)/5, x, y, z);
+		rotateY((frameCount*r)/6000);
+		sphereMove(((26.5*0.1)*s)/5, x, y, z);
 	pop();
 }
 // Function to add an extra layer of translation to the initSphere function.
@@ -47,7 +47,7 @@ function makePlanet(n, r, s, x, y, z){
 function sphereMove(rad, x, y, z) {
 	push();
 		translate(x, y, z);
-		this.initSphere(rad);
+		initSphere(rad);
 	pop();
 }
 
@@ -59,7 +59,7 @@ function sphereMove(rad, x, y, z) {
 function initSphere(rad) {
 	push();
 		translate(0, 0, 0);
-		rotateY(millis() / 1000);
+		rotateY(millis() / 2500);
 		sphere(rad, 24, 24);
 	pop();
 }

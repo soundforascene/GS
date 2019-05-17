@@ -1,5 +1,3 @@
-//    browser-sync start --server -f -w 
-
 function earthLevel() {
 
 	// Declerations
@@ -12,19 +10,12 @@ function earthLevel() {
 
 		// === Canvas ====
 		createCanvas(windowWidth, windowHeight, WEBGL);
-		// ==== Scenes =====
-		mgr = new SceneManager();
-		//mgr.wire();
-		mgr.addScene(Intro);
-		//mgr.addScene(Intro);
-	    mgr.showScene(sunLevel);
-	    //mgr.showNextScene();
+
 		// ===== Stars =====
 		for (let i = 0; i < 1000; i++) {
 			let p = new Particle();
 			particles.push(p);
 		}
-		// ===== DOM Elements, sliders ect. =====
 
 	  	// ===== Audio =====
 	  	nintendo.play();
@@ -38,7 +29,7 @@ function earthLevel() {
 		//Camera
 		orbitControl();
 
-		makeSun(imgEarth, 0, 550, 0);
+		makeSun(imgEarth, 300, 0);
 
 		// Making Stars
 		for (let i = 0; i < particles.length; i++) {
@@ -49,9 +40,4 @@ function earthLevel() {
 
 	// ===== Functions & Classes =====
 
-		this.keyPressed = function() {
-		this.sceneManager.showScene( Intro ); 
-        //mgr.handleEvent("keyPressed");
-        print("Done");
-    }
 }
