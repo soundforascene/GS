@@ -1,10 +1,9 @@
 function earthLevel() {
 
 	// Declerations
-	var yMov = 0;
-	var zMov = 0;
 	let particles = [];
 	var mgr;
+	var slider;
 
 	this.setup = function() {
 
@@ -18,8 +17,11 @@ function earthLevel() {
 		}
 
 	  	// ===== Audio =====
-	  	nintendo.play();
-	}
+
+	  	slider = createSlider(150, 5000, 2500, 20);
+		slider.position(10, 10);
+		slider.style('width', '80px');
+}
 
 	this.draw = function() {
 		// Background Colour
@@ -29,7 +31,9 @@ function earthLevel() {
 		//Camera
 		orbitControl();
 
-		makeSun(imgEarth, 300, 0);
+		var speed = slider.value();
+
+		makeSun(imgEarth, 300, 0, speed);
 
 		// Making Stars
 		for (let i = 0; i < particles.length; i++) {
@@ -39,5 +43,39 @@ function earthLevel() {
 	}
 
 	// ===== Functions & Classes =====
+
+		this.keyPressed = function() {
+		if (key == '1') {
+			this.sceneManager.showScene( sunLevel );
+		} 
+		if (key == '2') {
+			this.sceneManager.showScene( mercuryLevel );
+		}
+		if (key == '3') {
+			this.sceneManager.showScene( venusLevel );
+		}
+		if (key == '4') {
+			this.sceneManager.showScene( Intro );
+		}
+		if (key == '5') {
+			this.sceneManager.showScene( marsLevel );
+		}
+		if (key == '6') {
+			this.sceneManager.showScene( jupiterLevel );
+		}
+		if (key == '7') {
+			this.sceneManager.showScene( saturnLevel );
+		}
+		if (key == '8') {
+			this.sceneManager.showScene( ursanusLevel );
+		}
+		if (key == '9') {
+			this.sceneManager.showScene( neptuneLevel );
+		}
+		if (key == '0') {
+			this.sceneManager.showScene( plutoLevel );
+		}
+
+    }
 
 }

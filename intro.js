@@ -14,6 +14,7 @@ function preload(){
 	imgUranus = loadImage('assets/images/uranus.png');
 	imgNeptune = loadImage('assets/images/neptune.png');
 	imgPluto = loadImage('assets/images/pluto.jpeg');
+    font = loadFont('assets/fonts/font.otf');
 }
 
 function setup()
@@ -22,7 +23,7 @@ function setup()
 
     mgr.nintendo = nintendo;
     mgr.imgSun = imgSun;
-    mgr.imgMercury = imgMercury;
+    mgr.imgMercury = mgr.imgMercury
     mgr.imgMoon = imgMoon;
     mgr.imgEarth = imgEarth;
     mgr.imgMars = imgMars;
@@ -31,6 +32,7 @@ function setup()
     mgr.imgUranus = imgUranus;
     mgr.imgNeptune = imgNeptune;
     mgr.imgPluto = imgPluto;
+    mgr.font = font;
 
     mgr.addScene( Intro );
     mgr.addScene( sunLevel );

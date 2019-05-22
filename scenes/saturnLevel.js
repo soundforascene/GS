@@ -1,4 +1,4 @@
-function marsLevel() {
+function saturnLevel() {
 
 	// Declerations
 	var slider;
@@ -16,6 +16,7 @@ function marsLevel() {
 			particles.push(p);
 		}
 
+	  	// ===== Audio =====
 	  	slider = createSlider(150, 5000, 2500, 20);
 		slider.position(10, 10);
 		slider.style('width', '80px');
@@ -29,7 +30,7 @@ function marsLevel() {
 		//Camera
 		orbitControl();
 
-		makeSun(imgMars, 250, 0);
+		makeSun(imgSaturn, 250, 0);
 
 		// Making Stars
 		for (let i = 0; i < particles.length; i++) {
@@ -53,16 +54,16 @@ function marsLevel() {
 			this.sceneManager.showScene( earthLevel );
 		}
 		if (key == '5') {
-			this.sceneManager.showScene( Intro );
+			this.sceneManager.showScene( marsLevel );
 		}
 		if (key == '6') {
 			this.sceneManager.showScene( jupiterLevel );
 		}
 		if (key == '7') {
-			this.sceneManager.showScene( saturnLevel );
+			this.sceneManager.showScene( Intro );
 		}
 		if (key == '8') {
-			this.sceneManager.showScene( uranusLevel );
+			this.sceneManager.showScene( ursanusLevel );
 		}
 		if (key == '9') {
 			this.sceneManager.showScene( neptuneLevel );

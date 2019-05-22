@@ -1,9 +1,10 @@
-function marsLevel() {
+function jupiterLevel() {
 
 	// Declerations
-	var slider;
-	let particles = [];
+	let n = 5;
 	var mgr;
+	var wordOnOff = 'Off';
+	var onOff;
 
 	this.setup = function() {
 
@@ -15,10 +16,19 @@ function marsLevel() {
 			let p = new Particle();
 			particles.push(p);
 		}
+	  	// ==== DOM ====
+	  	slider[n] = createSlider(150, 5000, 2500, 20);
+		slider[n].position(10, 10);
+		slider[n].style('width', '80px');
 
-	  	slider = createSlider(150, 5000, 2500, 20);
-		slider.position(10, 10);
-		slider.style('width', '80px');
+		textSize(20);
+		textFont(font);
+
+		checkbox[n] = createCheckbox('', false);
+		checkbox[n].position(10, 50);
+	  	checkbox[n].changed(myCheckedEvent);
+ 
+
 	}
 
 	this.draw = function() {
@@ -27,9 +37,12 @@ function marsLevel() {
 		// Smoothes resized images and shapes
 		smooth();
 		//Camera
-		orbitControl();
+		//orbitControl();
 
-		makeSun(imgMars, 250, 0);
+		fill(255, 255, 255);
+	  	text(wordOnOff, -680, -280);
+
+		makeSun(imgJupiter, 400, 0, slider[n].value(), onOff);
 
 		// Making Stars
 		for (let i = 0; i < particles.length; i++) {
@@ -39,6 +52,17 @@ function marsLevel() {
 	}
 
 	// ===== Functions & Classes =====
+
+	function myCheckedEvent() {
+	if (checkbox[n].checked()) { 
+		wordOnOff = 'On';
+		onOff = true;
+	} else {
+		wordOnOff = 'Off';
+		onOff = false;
+	}
+}
+
 		this.keyPressed = function() {
 		if (key == '1') {
 			this.sceneManager.showScene( sunLevel );
@@ -53,16 +77,16 @@ function marsLevel() {
 			this.sceneManager.showScene( earthLevel );
 		}
 		if (key == '5') {
-			this.sceneManager.showScene( Intro );
+			this.sceneManager.showScene( marsLevel );
 		}
 		if (key == '6') {
-			this.sceneManager.showScene( jupiterLevel );
+			this.sceneManager.showScene( Intro );
 		}
 		if (key == '7') {
 			this.sceneManager.showScene( saturnLevel );
 		}
 		if (key == '8') {
-			this.sceneManager.showScene( uranusLevel );
+			this.sceneManager.showScene( ursanusLevel );
 		}
 		if (key == '9') {
 			this.sceneManager.showScene( neptuneLevel );

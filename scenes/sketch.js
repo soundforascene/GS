@@ -1,32 +1,25 @@
-//    browser-sync start --server -f -w  
+//    browser-sync start --server -f -w 
 
 function Intro() {
 
-	// Declerations
-	var time;
-	var yMov = 0;
-	let particles = [];
-	var mgr;
-
 	this.setup = function() {
 
-		// === Canvas ====
-		createCanvas(windowWidth, windowHeight, WEBGL);
-		// ===== Stars =====
-		for (let i = 0; i < 1000; i++) {
-			let p = new Particle();
-			particles.push(p);
-		}
-		// ===== DOM Elements, sliders ect. =====
-		slider = createSlider(0, 1, 0, 0);
-	  	slider.position(150, 10);
-	  	slider.style('width', '80px');
+	let v0 = createVector(0, 0, 0);
+	let v1 = createVector(0, 0, 50);
 
-	  	// ===== Audio =====
-	  	nintendo.play();
+	// === Canvas ====
+	createCanvas(windowWidth, windowHeight, WEBGL);
+	// ===== Stars =====
+	for (let i = 0; i < 1000; i++) {
+		let p = new Particle();
+		particles.push(p);
 	}
+	// ===== Audio =====
 
-	this.draw = function() {
+	// DOM Events
+}
+
+this.draw = function() {
 
 		// Background Colour
 		background(0);
@@ -34,25 +27,19 @@ function Intro() {
 		smooth();
 		//Camera
 		orbitControl();
+		// DOM Events 
+		var val = 6000;
 
-		var val = slider.value();
-		nintendo.setVolume(val);
-
-		var time = (frameCount*0.03);
-		var zMov = time;
-
-		//print(time);
-
-		makeSun(imgSun, 109, 0);
-		makePlanet(imgMercury, 47, (0.3*20), 69, yMov, zMov);
-		makePlanet(imgVenus, 35, (0.9*20), 109, yMov, zMov);
-		makePlanet(imgEarth, 29.8, (1*20), 147, yMov, zMov);
-		makePlanet(imgMars, 24.1, (0.53*20), 206, yMov, zMov);
-		makePlanet(imgJupiter, 13, (11.2*3), (545-200), yMov, zMov);
-		makePlanet(imgSaturn, 9.6, (9.4*3), 600-200, yMov, zMov);
-		makePlanet(imgUranus, 6.8, (4*5), 800-200, yMov, zMov);
-		makePlanet(imgNeptune, 5.5, (3.8*5), 900-400, yMov, zMov);
-		makePlanet(imgPluto, 4.6, (0.18*10), 1000-400, yMov, zMov);
+		makeSun(imgSun, 109, 0, val);
+		makePlanet(imgMercury, 47, (0.3*20), 69, val);
+		makePlanet(imgVenus, 35, (0.9*20), 109, val);
+		makePlanet(imgEarth, 29.8, (1*20), 147, val);
+		makePlanet(imgMars, 24.1, (0.53*20), 206, val);
+		makePlanet(imgJupiter, 13, (11.2*3), 545-100, val);
+		makePlanet(imgSaturn, 9.6, (9.4*3), 600-100, val);
+		makePlanet(imgUranus, 6.8, (4*5), 800-100, val);
+		makePlanet(imgNeptune, 5.5, (3.8*5), 900-100, val);
+		makePlanet(imgPluto, 4.6, (0.18*10), 1000-100,val);
 
 		// Making Stars
 		for (let i = 0; i < particles.length; i++) {
@@ -62,12 +49,47 @@ function Intro() {
 	}
 	// ===== Functions & Classes =====
 
-	this.keyPressed = function() {
+		this.keyPressed = function() {
 		if (key == '1') {
 			this.sceneManager.showScene( sunLevel );
+			showDom(0);
 		} 
 		if (key == '2') {
-			this.sceneManager.showScene( earthLevel );
+			this.sceneManager.showScene( mercuryLevel );
+			showDom(1);
 		}
+		if (key == '3') {
+			this.sceneManager.showScene( venusLevel );
+			showDom(2);
+		}
+		if (key == '4') {
+			this.sceneManager.showScene( earthLevel );
+			showDom(3);
+		}
+		if (key == '5') {
+			this.sceneManager.showScene( marsLevel );
+			showDom(4);
+		}
+		if (key == '6') {
+			this.sceneManager.showScene( jupiterLevel );
+			showDom(5);
+		}
+		if (key == '7') {
+			this.sceneManager.showScene( saturnLevel );
+			showDom(6);
+		}
+		if (key == '8') {
+			this.sceneManager.showScene( uranusLevel );
+			showDom(7);
+		}
+		if (key == '9') {
+			this.sceneManager.showScene( neptuneLevel );
+			showDom(8);
+		}
+		if (key == '0') {
+			this.sceneManager.showScene( plutoLevel );
+			showDom(9);
+		}
+
     }
 }

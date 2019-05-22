@@ -1,69 +1,81 @@
-//    browser-sync start --server -f -w 
+function mercuryLevel() {
 
-function sunLevel() {
-
-	// Declerations
-	var cnv;
-	var drag = 0;
-	var earthSize = 0.1;
-	var camRotation;
-	var yMov = 0;
-	var zMov = 0;
-	let cam;
-	let delta = 0.01;
-	let particles = [];
-	var mgr;
+	var p = 1;
+	var osc;
+	var rev;
+	var lfo;
 
 	this.setup = function() {
 
-		// === Canvas ====
-		cnv = createCanvas(windowWidth, windowHeight, WEBGL);
-		centerCanvas();
-		
-		// ==== Scenes =====
-		mgr = new SceneManager();
-		//mgr.wire();
-		mgr.addScene(Intro);
-		//mgr.addScene(Intro);
-	    mgr.showScene(sunLevel);
-	    //mgr.showNextScene();
 
-		// ===== Image =====
-		imageMode(CENTER);
-		cam = createCamera();
+		// === Canvas ====
+		createCanvas(windowWidth, windowHeight, WEBGL);
+
 		// ===== Stars =====
-		for (let i = 0; i < 1000; i++) {
+		for (let i = 0; i < 200; i++) {
 			let p = new Particle();
 			particles.push(p);
 		}
-		// ===== DOM Elements, sliders ect. =====
 
-	  	// ===== Audio =====
-	  	nintendo.play();
+		slider[p][0] = createSlider(150, 5000, 2500, 20);
+		slider[p][0].position(220, 30);
+		slider[p][0].style('width', '200px');
+		slider[p][1] = createSlider(0, 500, 250, 10);
+		slider[p][1].position(220, 80);
+		slider[p][1].style('width', '200px');
+		slider[p][2] = createSlider(0, 1, 0.5, 0.01);
+		slider[p][2].position(220, 130);
+		slider[p][2].style('width', '200px');
+		slider[p][3] = createSlider(0, 20, 10, 0.2);
+		slider[p][3].position(220, 180);
+		slider[p][3].style('width', '200px');
+
+		osc = new p5.Oscillator();
+		osc.setType('sine');
+		osc.amp(0);
+		osc.start();
+
+		lfo = new p5.Oscillator();
+		lfo.setType('sine');
+		lfo.disconnect();
+		lfo.freq(5);
+		//lfo.amp(0.8);
+		lfo.start();
+		//osc.add(lfo);
+
+		osc.amp(lfo.scale(-1, 1, 1, -1));
+
+		rev = new p5.Reverb();
+		rev.process(osc, 5, 3);
 	}
 
 	this.draw = function() {
-
-		var size = map(0.02, 0, 1, 25, 100);
 		// Background Colour
 		background(0);
 		// Smoothes resized images and shapes
 		smooth();
 		//Camera
-		orbitControl();
+		//orbitControl();
 
-		this.makeSun = function(n, r, s, x){
-			push();
-			ambientMaterial(200, 200, 255);
-			//pointLight(255, 255, 255, 0, 0, 0);
-			ambientLight(255);
-			texture(n);
-			rotateZ((frameCount*r) / 12000);
-			this.sphereMove(((size*earthSize) * s) / 5, x ,0 ,0);
-			pop();
-		}
+		let speed = slider[p][0].value();
+		let size = slider[p][1].value();
+		let lfoAmp = slider[p][2].value();
+		let lfoRate = slider[p][3].value();
 
-		this.makeSun(imgSun, 0, 300, 0);
+		var soundSpeed = map(speed, 5000, 150, 100, 200);
+		var soundSize = map(size, 0, 500, 0, 2);
+
+		osc.freq(soundSpeed);
+		osc.amp(soundSize);
+
+		lfo.amp(lfoAmp);
+		lfo.freq(lfoRate);
+
+		makeSun(imgMercury, size, 0, speed);
+
+		// ==== Text ====
+
+		printText('Mercury');
 
 		// Making Stars
 		for (let i = 0; i < particles.length; i++) {
@@ -75,62 +87,48 @@ function sunLevel() {
 	// ===== Functions & Classes =====
 
 		this.keyPressed = function() {
-		this.sceneManager.showScene( Intro ); 
-        //mgr.handleEvent("keyPressed");
-        print("Done");
+		if (key == '1') {
+			this.sceneManager.showScene( sunLevel );
+			hideDom(p);
+			showDom(0);
+		} 
+		if (key == '2') {
+			this.sceneManager.showScene( Intro );
+			hideDom(p);
+		}
+		if (key == '3') {
+			this.sceneManager.showScene( venusLevel );
+			hideDom(p);
+		}
+		if (key == '4') {
+			this.sceneManager.showScene( earthLevel );
+			hideDom(p);
+		}
+		if (key == '5') {
+			this.sceneManager.showScene( marsLevel );
+			hideDom(p);
+		}
+		if (key == '6') {
+			this.sceneManager.showScene( jupiterLevel );
+			hideDom(p);
+		}
+		if (key == '7') {
+			this.sceneManager.showScene( saturnLevel );
+			hideDom(p);
+		}
+		if (key == '8') {
+			this.sceneManager.showScene( ursanusLevel );
+			hideDom(p);
+		}
+		if (key == '9') {
+			this.sceneManager.showScene( neptuneLevel );
+			hideDom(p);
+		}
+		if (key == '0') {
+			this.sceneManager.showScene( plutoLevel );
+			hideDom(p);
+		}
+
     }
 
-	// Star Particle
-	class Particle {
-		constructor() {
-			this.x = random(-2500, 2500);
-			this.y = random(-2500, 2500);
-			this.z = random(2500, -2500);
-			this.rad = random(0.5, 2);
-			this.a = random(0, 255);
-		}
-		show() {
-			push();
-			noStroke();
-			fill(this.a);
-			if(this.x < -200 || this.x > 200 || this.y < -200 || this.y > 200 || this.z < -200 || this.z > 200) {
-				translate(this.x, this.y, this.z);
-				sphere(this.rad, 8, 8);
-			}
-			pop();
-		}
-	}
-
-	// Function to add an extra layer of translation to the initSphere function.
-	// Syntax: x = sphere radius, a = translate X
-	this.sphereMove = function(rad, x, y, z) {
-		push();
-		translate(x, y, z);
-		this.initSphere(rad);
-		pop();
-	}
-
-	// Function to create the sphere object
-	// Syntax = initSphere(radius, detailX, detailY)
-	// I use push and pop to localise the Y roation to the sphere
-	//as it its where the centre so it doesnt get roatated on the
-	//trassnform axis later on.
-		this.initSphere = function(rad) {
-			push();
-			translate(0, 0, 0);
-			rotateY(millis() / 1000);
-			sphere(rad, 24, 24);
-			pop();
-		}
-
-	// // These next two functons centre the patch and allow for resizing
-	function centerCanvas() {
-		var x = (windowWidth - width) / 2;
-		var y = (windowHeight - height) /2;
-		cnv.position(x , y);
-	}
-
-	this.windowResized = function() {
-		centerCanvas();
-	}
 }
