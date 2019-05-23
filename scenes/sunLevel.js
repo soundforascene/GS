@@ -9,13 +9,10 @@ function sunLevel() {
 	this.setup = function() {
 
 		// === Canvas ====
+
 		createCanvas(windowWidth, windowHeight, WEBGL);
 
 		// ===== Stars =====
-		for (let i = 0; i < 200; i++) {
-			let p = new Particle();
-			particles.push(p);
-		}
 
 		slider[p][0] = createSlider(150, 5000, 2500, 20);
 		slider[p][0].position(220, 30);
@@ -84,51 +81,17 @@ function sunLevel() {
 			particles[i].show();
 		}
 
+
+
 	}
 
 	// ===== Functions & Classes =====
+
 	this.keyPressed = function() {
 		if (key == '1') {
 			this.sceneManager.showScene( Intro );
 			hideDom(p);
 		} 
-		if (key == '2') {
-			this.sceneManager.showScene( mercuryLevel );
-			hideDom(p);
-			showDom(1);
-		}
-		if (key == '3') {
-			this.sceneManager.showScene( venusLevel );
-			hideDom(p);
-		}
-		if (key == '4') {
-			this.sceneManager.showScene( earthLevel );
-			hideDom(p);
-		}
-		if (key == '5') {
-			this.sceneManager.showScene( marsLevel );
-			hideDom(p);
-		}
-		if (key == '6') {
-			this.sceneManager.showScene( jupiterLevel );
-			hideDom(p);
-		}
-		if (key == '7') {
-			this.sceneManager.showScene( saturnLevel );
-			hideDom(p);
-		}
-		if (key == '8') {
-			this.sceneManager.showScene( uranusLevel );
-			hideDom(p);
-		}
-		if (key == '9') {
-			this.sceneManager.showScene( neptuneLevel );
-			hideDom(p);
-		}
-		if (key == '0') {
-			this.sceneManager.showScene( plutoLevel );
-			hideDom(p);
-		}
 
     }
 

@@ -11,11 +11,6 @@ function mercuryLevel() {
 		// === Canvas ====
 		createCanvas(windowWidth, windowHeight, WEBGL);
 
-		// ===== Stars =====
-		for (let i = 0; i < 200; i++) {
-			let p = new Particle();
-			particles.push(p);
-		}
 
 		slider[p][0] = createSlider(150, 5000, 2500, 20);
 		slider[p][0].position(220, 30);
@@ -62,7 +57,7 @@ function mercuryLevel() {
 		let lfoAmp = slider[p][2].value();
 		let lfoRate = slider[p][3].value();
 
-		var soundSpeed = map(speed, 5000, 150, 100, 200);
+		var soundSpeed = map(speed, 5000, 150, 500, 1000);
 		var soundSize = map(size, 0, 500, 0, 2);
 
 		osc.freq(soundSpeed);
@@ -71,11 +66,10 @@ function mercuryLevel() {
 		lfo.amp(lfoAmp);
 		lfo.freq(lfoRate);
 
-		makeSun(imgMercury, size, 0, speed);
-
 		// ==== Text ====
-
 		printText('Mercury');
+
+		makeSun(imgMercury, size, 0, speed);
 
 		// Making Stars
 		for (let i = 0; i < particles.length; i++) {
@@ -86,46 +80,9 @@ function mercuryLevel() {
 
 	// ===== Functions & Classes =====
 
-		this.keyPressed = function() {
-		if (key == '1') {
-			this.sceneManager.showScene( sunLevel );
-			hideDom(p);
-			showDom(0);
-		} 
+	this.keyPressed = function() {
 		if (key == '2') {
 			this.sceneManager.showScene( Intro );
-			hideDom(p);
-		}
-		if (key == '3') {
-			this.sceneManager.showScene( venusLevel );
-			hideDom(p);
-		}
-		if (key == '4') {
-			this.sceneManager.showScene( earthLevel );
-			hideDom(p);
-		}
-		if (key == '5') {
-			this.sceneManager.showScene( marsLevel );
-			hideDom(p);
-		}
-		if (key == '6') {
-			this.sceneManager.showScene( jupiterLevel );
-			hideDom(p);
-		}
-		if (key == '7') {
-			this.sceneManager.showScene( saturnLevel );
-			hideDom(p);
-		}
-		if (key == '8') {
-			this.sceneManager.showScene( ursanusLevel );
-			hideDom(p);
-		}
-		if (key == '9') {
-			this.sceneManager.showScene( neptuneLevel );
-			hideDom(p);
-		}
-		if (key == '0') {
-			this.sceneManager.showScene( plutoLevel );
 			hideDom(p);
 		}
 

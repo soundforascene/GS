@@ -1,33 +1,47 @@
 function jupiterLevel() {
 
 	// Declerations
-	let n = 5;
-	var mgr;
-	var wordOnOff = 'Off';
-	var onOff;
+	var p = 5;
+	var osc;
+	var rev;
+	var lfo;
 
 	this.setup = function() {
 
 		// === Canvas ====
 		createCanvas(windowWidth, windowHeight, WEBGL);
 
-		// ===== Stars =====
-		for (let i = 0; i < 1000; i++) {
-			let p = new Particle();
-			particles.push(p);
-		}
-	  	// ==== DOM ====
-	  	slider[n] = createSlider(150, 5000, 2500, 20);
-		slider[n].position(10, 10);
-		slider[n].style('width', '80px');
+		slider[p][0] = createSlider(150, 5000, 2500, 20);
+		slider[p][0].position(220, 30);
+		slider[p][0].style('width', '200px');
+		slider[p][1] = createSlider(0, 500, 250, 10);
+		slider[p][1].position(220, 80);
+		slider[p][1].style('width', '200px');
+		slider[p][2] = createSlider(0, 1, 0.5, 0.01);
+		slider[p][2].position(220, 130);
+		slider[p][2].style('width', '200px');
+		slider[p][3] = createSlider(0, 20, 10, 0.2);
+		slider[p][3].position(220, 180);
+		slider[p][3].style('width', '200px');
 
-		textSize(20);
-		textFont(font);
 
-		checkbox[n] = createCheckbox('', false);
-		checkbox[n].position(10, 50);
-	  	checkbox[n].changed(myCheckedEvent);
- 
+		osc = new p5.Oscillator();
+		osc.setType('sine');
+		osc.amp(0);
+		osc.start();
+
+		lfo = new p5.Oscillator();
+		lfo.setType('sine');
+		lfo.disconnect();
+		lfo.freq(5);
+		//lfo.amp(0.8);
+		lfo.start();
+		//osc.add(lfo);
+
+		osc.amp(lfo.scale(-1, 1, 1, -1));
+
+		rev = new p5.Reverb();
+		rev.process(osc, 5, 3);
 
 	}
 
@@ -36,13 +50,25 @@ function jupiterLevel() {
 		background(0);
 		// Smoothes resized images and shapes
 		smooth();
-		//Camera
-		//orbitControl();
 
-		fill(255, 255, 255);
-	  	text(wordOnOff, -680, -280);
+		let speed = slider[p][0].value();
+		let size = slider[p][1].value();
+		let lfoAmp = slider[p][2].value();
+		let lfoRate = slider[p][3].value();
 
-		makeSun(imgJupiter, 400, 0, slider[n].value(), onOff);
+		var soundSpeed = map(speed, 5000, 150, 150, 250);
+		var soundSize = map(size, 0, 500, 0, 2);
+
+		osc.freq(soundSpeed);
+		osc.amp(soundSize);
+
+		lfo.amp(lfoAmp);
+		lfo.freq(lfoRate);
+
+		// ==== Text ====
+		printText('Jupiter');
+
+		makeSun(imgJupiter, size, 0, speed);
 
 		// Making Stars
 		for (let i = 0; i < particles.length; i++) {
@@ -53,46 +79,10 @@ function jupiterLevel() {
 
 	// ===== Functions & Classes =====
 
-	function myCheckedEvent() {
-	if (checkbox[n].checked()) { 
-		wordOnOff = 'On';
-		onOff = true;
-	} else {
-		wordOnOff = 'Off';
-		onOff = false;
-	}
-}
-
-		this.keyPressed = function() {
-		if (key == '1') {
-			this.sceneManager.showScene( sunLevel );
-		} 
-		if (key == '2') {
-			this.sceneManager.showScene( mercuryLevel );
-		}
-		if (key == '3') {
-			this.sceneManager.showScene( venusLevel );
-		}
-		if (key == '4') {
-			this.sceneManager.showScene( earthLevel );
-		}
-		if (key == '5') {
-			this.sceneManager.showScene( marsLevel );
-		}
+	this.keyPressed = function() {
 		if (key == '6') {
 			this.sceneManager.showScene( Intro );
-		}
-		if (key == '7') {
-			this.sceneManager.showScene( saturnLevel );
-		}
-		if (key == '8') {
-			this.sceneManager.showScene( ursanusLevel );
-		}
-		if (key == '9') {
-			this.sceneManager.showScene( neptuneLevel );
-		}
-		if (key == '0') {
-			this.sceneManager.showScene( plutoLevel );
+			hideDom(p);
 		}
 
     }
