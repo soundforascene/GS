@@ -1,7 +1,6 @@
 function preload(){
 	// ==== Audio =====
-	soundFormats('mp3');
-	nintendo = loadSound('assets/audio/nintendo.mp3');
+
 	// ==== Images ====
 	imgSun = loadImage('assets/images/sun.jpeg');
 	imgMercury = loadImage('assets/images/mercury.jpeg');
@@ -21,7 +20,6 @@ function setup()
 {
     var mgr = new SceneManager();
 
-    mgr.nintendo = nintendo;
     mgr.imgSun = imgSun;
     mgr.imgMercury = mgr.imgMercury
     mgr.imgMoon = imgMoon;

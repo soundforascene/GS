@@ -16,7 +16,6 @@ function Intro() {
 	}
 	// ===== Audio =====
 
-	// DOM Events
 }
 
 this.draw = function() {
@@ -40,6 +39,14 @@ this.draw = function() {
 		makePlanet(imgUranus, 6.8, (4*5), 800-100, val);
 		makePlanet(imgNeptune, 5.5, (3.8*5), 900-100, val);
 		makePlanet(imgPluto, 4.6, (0.18*10), 1000-100,val);
+
+		push();
+		textSize(20);
+		textFont(font);
+		textAlign(CENTER);
+		fill('white');
+		text("Press Number Keys 1-9 to switch Planet", 0, -300);
+		pop();
 
 		// Making Stars
 		for (let i = 0; i < particles.length; i++) {
