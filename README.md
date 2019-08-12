@@ -1,2 +1,2 @@
-# GS
-Repo for GS Module 
+# soundforascene.github.io
+Artist Portfolio 
