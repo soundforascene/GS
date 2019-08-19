@@ -4,16 +4,12 @@
 	let checkbox = [];
 	var mgr;
 	let slider = make2DArray(10, 10);
+	var val = 6000;
+	
 	// let freqTXT = text("Freqency/ Speed", -700, -300);
 	// let ampTXT = text("Amplitude/ Size", -700, -250);
 	// let lfoTXT =text("LFO Amplitude", -700, -200);
 	// let rateTXT = text("LFO Rate", -700, -150);
-
-	// //let images = [imgMercury, imgVenus, imgEarth, imgMars, imgJupiter, imgSaturn, imgUranus, imgNeptune, imgPluto];
-	// let speeds = [47, 35, 29.8, 24.1, 13, 9.6, 6.8, 5.5, 4.6];
-	// let sizes = [0.3, 0.9, 1, 0.53, 11.2, 9.4, 4, 3.8, 0.18]; 
-	// let xLocations = [69, 109, 147, 206, 545, 600, 800, 900, 1000];
-	//let angles = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 
 // ======= CLASSES =======
 
@@ -55,16 +51,9 @@ function printText(name) {
 	pop();
 }
 function hidehideDom() {
-	hideDom(0);
-	hideDom(1);
-	hideDom(2);
-	hideDom(3);
-	hideDom(4);
-	hideDom(5);
-	hideDom(6);
-	hideDom(7);
-	hideDom(8);
-	hideDom(9);
+	for (let i = 0; i < 9; i++) {
+		hideDom(i);
+	}
 }
 
 function hideDom(p) {
@@ -95,7 +84,7 @@ function planetOsc(freq, amp) {
 }
 
 // Syntax: n = name, s = size, x = x position
-function makeSun(name, size, x, speed, on){
+function makeSun(name, size, x, speed){
 	push();
 		ambientMaterial(200, 200, 255);
 		texture(name);
@@ -127,10 +116,10 @@ function makeSun(name, size, x, speed, on){
 // Syntax: n = name, r = rotation (relative speed around the sun), s = size (size compared to earth), x = x transform (distance from the sun)
 // function makePlanet(name, rotation, size, x, y, z){
 
-	function makePlanet(name, rotation, size, x, speed){
+	function makePlanet(name, rotation, size, x){
 	push();
 		texture(name);
-		rotateY((frameCount*rotation)/speed);
+		rotateY((frameCount*rotation)/val);
 		sphereMove(((26.5*0.1)*size)/5, x, 2500);
 	pop();
 }

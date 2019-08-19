@@ -16,7 +16,6 @@ function Intro() {
 	}
 	// ===== Audio =====
 
-	// DOM Events
 }
 
 this.draw = function() {
@@ -28,18 +27,23 @@ this.draw = function() {
 		//Camera
 		orbitControl();
 		// DOM Events 
-		var val = 6000;
 
-		makeSun(imgSun, 109, 0, val);
-		makePlanet(imgMercury, 47, (0.3*20), 69, val);
-		makePlanet(imgVenus, 35, (0.9*20), 109, val);
-		makePlanet(imgEarth, 29.8, (1*20), 147, val);
-		makePlanet(imgMars, 24.1, (0.53*20), 206, val);
-		makePlanet(imgJupiter, 13, (11.2*3), 545-100, val);
-		makePlanet(imgSaturn, 9.6, (9.4*3), 600-100, val);
-		makePlanet(imgUranus, 6.8, (4*5), 800-100, val);
-		makePlanet(imgNeptune, 5.5, (3.8*5), 900-100, val);
-		makePlanet(imgPluto, 4.6, (0.18*10), 1000-100,val);
+		let image = [imgSun, imgMercury, imgVenus, imgEarth, imgMars, imgJupiter, imgSaturn, imgUranus, imgNeptune, imgPluto];
+		let rotSpeed = [0, 47, 35, 29.8, 24.1, 13, 9.6, 6.8, 5.5, 4.6]; 
+		let size = [109/20, 0.3, 0.9, 1, 0.53, 11.2/4, 9.4/4, 4, 3.8, 0.18];
+		let place = [0, 69, 109, 147, 206, 545, 600, 800, 900, 1000];
+
+		for (var i = 0; i < 10; i++) {
+			makePlanet(image[i], rotSpeed[i], size[i]*20, place[i]);
+		}
+
+		push();
+		textSize(20);
+		textFont(font);
+		textAlign(CENTER);
+		fill('white');
+		text("Press Number Keys 1-9 to switch Planet", 0, -300);
+		pop();
 
 		// Making Stars
 		for (let i = 0; i < particles.length; i++) {
@@ -52,44 +56,34 @@ this.draw = function() {
 		this.keyPressed = function() {
 		if (key == '1') {
 			this.sceneManager.showScene( sunLevel );
-			showDom(0);
-		} 
+			showDom(0); } 
 		if (key == '2') {
 			this.sceneManager.showScene( mercuryLevel );
-			showDom(1);
-		}
+			showDom(1); }
 		if (key == '3') {
 			this.sceneManager.showScene( venusLevel );
-			showDom(2);
-		}
+			showDom(2); }
 		if (key == '4') {
 			this.sceneManager.showScene( earthLevel );
-			showDom(3);
-		}
+			showDom(3); }
 		if (key == '5') {
 			this.sceneManager.showScene( marsLevel );
-			showDom(4);
-		}
+			showDom(4); }
 		if (key == '6') {
 			this.sceneManager.showScene( jupiterLevel );
-			showDom(5);
-		}
+			showDom(5); }
 		if (key == '7') {
 			this.sceneManager.showScene( saturnLevel );
-			showDom(6);
-		}
+			showDom(6); }
 		if (key == '8') {
 			this.sceneManager.showScene( uranusLevel );
-			showDom(7);
-		}
+			showDom(7); }
 		if (key == '9') {
 			this.sceneManager.showScene( neptuneLevel );
-			showDom(8);
-		}
+			showDom(8); }
 		if (key == '0') {
 			this.sceneManager.showScene( plutoLevel );
-			showDom(9);
-		}
+			showDom(9);}
 
     }
 }

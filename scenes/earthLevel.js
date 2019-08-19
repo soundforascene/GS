@@ -49,7 +49,6 @@ function earthLevel() {
 		// Smoothes resized images and shapes
 		smooth();
 
-
 		let speed = slider[p][0].value();
 		let size = slider[p][1].value();
 		let lfoAmp = slider[p][2].value();
@@ -73,7 +72,6 @@ function earthLevel() {
 		for (let i = 0; i < particles.length; i++) {
 			particles[i].show();
 		}
-
 	}
 
 	// ===== Functions & Classes =====
@@ -83,7 +81,5 @@ function earthLevel() {
 			this.sceneManager.showScene( Intro );
 			hideDom(p);
 		}
-
     }
-
 }
