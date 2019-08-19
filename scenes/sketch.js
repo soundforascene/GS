@@ -45,6 +45,14 @@ this.draw = function() {
 		text("Press Number Keys 1-9 to switch Planet", 0, -300);
 		pop();
 
+		push();
+		textSize(20);
+		textFont(font);
+		textAlign(CENTER);
+		fill('white');
+		text("Press Number Keys 1-9 to switch Planet", 0, -300);
+		pop();
+
 		// Making Stars
 		for (let i = 0; i < particles.length; i++) {
 			particles[i].show();
